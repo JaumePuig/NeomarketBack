@@ -1,20 +1,25 @@
 import express from 'express';
+import cors from 'cors';
 import productRouter from './src/routes/product.routes.js';
-import { dbConfig } from './src/config/db.config.js'; // 👈 IMPORTANTE
+import { dbConfig } from './src/config/db.config.js';
 
 const api = express();
-api.use(express.json());
-
 const port = 3000;
 
-// 👇 CONECTAR A MONGO AQUÍ
+
 await dbConfig();
+
+
+api.use(cors({
+  origin: 'http://localhost:4200'
+}));
+
+api.use(express.json());
 
 api.get('/', (req, res) => {
   res.send("API funcionando 🚀");
 });
 
-// rutas
 api.use('/api/productos', productRouter);
 
 api.listen(port, () => {
