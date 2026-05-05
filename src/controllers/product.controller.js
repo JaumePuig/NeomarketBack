@@ -14,11 +14,22 @@ export async function getProductsController(req, res) {
 
 // CREATE
 export async function createProductController(req, res) {
+  console.log(req.body);   // 👈 DEBUG
+  console.log(req.files);  // 👈 DEBUG
+
   const imagenes = req.files?.map(file => file.filename) || [];
 
   const data = {
-    ...req.body,
-    Imagenes: imagenes
+    Nombre: req.body.Nombre,
+    Descripcion: req.body.Descripcion,
+    Precio: Number(req.body.Precio),
+    Stock: Number(req.body.Stock),
+    Categoria: req.body.Categoria,
+    Descuento: Number(req.body.Descuento) || 0,
+    Imagenes: imagenes,
+    Etiquetas: req.body.Etiquetas
+      ? req.body.Etiquetas.split(",")
+      : []
   };
 
   const result = await createProductService(data);
@@ -32,9 +43,16 @@ export async function updateProductController(req, res) {
 
   const data = {
     ...req.body,
+    Precio: req.body.Precio ? Number(req.body.Precio) : undefined,
+    Stock: req.body.Stock ? Number(req.body.Stock) : undefined,
+    Descuento: req.body.Descuento
+      ? Number(req.body.Descuento)
+      : undefined,
+    Etiquetas: req.body.Etiquetas
+      ? req.body.Etiquetas.split(",")
+      : undefined
   };
 
-  // solo actualiza imágenes si vienen nuevas
   if (imagenes && imagenes.length > 0) {
     data.Imagenes = imagenes;
   }
