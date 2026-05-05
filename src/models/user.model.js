@@ -7,7 +7,7 @@ export async function userModel() {
     Nombre: { type: String, required: true },
     Apellidos: { type: String, required: true },
     Telefono: { type: Number, required: true},
-    Email: { type: String, required: true, unique: true  },
+    Email: { type: String, required: true  },
     Password: { type: String, required: true },
     Direccion: { type: String, required: true },
     Admin: { type: Boolean, required: true },
