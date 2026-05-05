@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import productRouter from './src/routes/product.routes.js';
+import userRouter from './src/routes/user.routes.js'
 import { dbConfig } from './src/config/db.config.js';
 import path from 'path';
 
@@ -23,6 +24,7 @@ api.get('/', (req, res) => {
 });
 
 api.use('/api/productos', productRouter);
+api.use('/api/users', userRouter);
 
 api.use('/uploads', express.static('uploads'));
 
