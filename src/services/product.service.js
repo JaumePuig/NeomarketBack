@@ -33,3 +33,8 @@ export async function deleteProductService(id) {
   const producto = await productModel();
   return await producto.findByIdAndDelete(id);
 }
+
+export async function getProductByIdService(id) {
+  const producto = await productModel();
+  return await producto.findById(id);
+}

@@ -3,7 +3,8 @@ import {
   getProductsController,
   createProductController,
   updateProductController,
-  deleteProductController
+  deleteProductController,
+  getProductByIdController
 } from "../controllers/product.controller.js";
 
 import { upload } from "../middleware/upload.middleware.js";
@@ -19,5 +20,7 @@ router.post("/", upload.array("imagenes"), createProductController);
 router.put("/:id", upload.array("imagenes"), updateProductController);
 
 router.delete("/:id", deleteProductController);
+
+router.get('/:id', getProductByIdController);
 
 export default router;

@@ -5,6 +5,14 @@ import {
   deleteProductService
 } from "../services/product.service.js";
 
+import { getProductByIdService } from "../services/product.service.js";
+
+export async function getProductByIdController(req, res) {
+  const { id } = req.params;
+  const result = await getProductByIdService(id);
+  res.send(result);
+}
+
 // GET
 export async function getProductsController(req, res) {
   const { nombre } = req.query;
