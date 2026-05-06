@@ -73,9 +73,9 @@ export async function loginService(userData) {
   }
 }
 
-export async function userUpdateService(userData) {
+export async function userUpdateService(userMail, userData) {
   const usuario = await userModel();
-  return await usuario.findOneAndUpdate({ 'Email': userData.Email }, { $set: { 'Nombre': userData.Nombre, 'Apellidos': userData.Apellidos, 'Telefono': userData.Telefono, 'Direccion': userData.Direccion, 'Wishlist': userData.Wishlist, 'Cartera': userData.Cartera, 'Birthdate': userData.Birthdate } }, {returnDocument: 'after'});
+  return await usuario.findOneAndUpdate({ 'Email': userMail }, { $set: { 'Nombre': userData.Nombre, 'Apellidos': userData.Apellidos, 'Telefono': userData.Telefono, 'Direccion': userData.Direccion, 'Wishlist': userData.Wishlist, 'Cartera': userData.Cartera, 'Birthdate': userData.Birthdate } }, {returnDocument: 'after'});
 }
 
 export async function userDeleteService({ Email }) {
@@ -84,9 +84,9 @@ export async function userDeleteService({ Email }) {
 }
 
 export async function userInfoService(userData) {
-  const { email, password } = userData;
+  const { Email } = userData;
   const usuario = await userModel();
-  const foundUser = await usuario.findOne({ Email: email });
+  const foundUser = await usuario.findOne({ Email: Email });
   if (!foundUser) return { status: 404, message: "Usuario o clave incorrecto" };
   const userInfo = {
     Nombre: foundUser.Nombre,

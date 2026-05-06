@@ -12,18 +12,18 @@ export async function loginController(req, res) {
 }
 
 export async function updateController(req, res) {
-  const { Nombre, Apellidos, Telefono, Email, Password, Direccion, Admin, Wishlist, Cartera, Birthdate } = req.body;
-  const mensaje = await userUpdateService(req.body);
+  const { Email } = req.params;
+  const mensaje = await userUpdateService(Email, req.body);
   res.send(mensaje);
 }
 
 export async function deleteController(req, res) {
-  const { Email } = req.body;
+  const { Email } = req.params;
   const mensaje = await userDeleteService({ Email});
   res.send(mensaje);
 }
 
 export async function userInfoController(req, res){
-  const userInfo = await userInfoService(req.body);
+  const userInfo = await userInfoService(req.params);
   res.status(userInfo.status).json(userInfo.message);
 }
