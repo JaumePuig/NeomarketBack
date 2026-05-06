@@ -51,9 +51,9 @@ export async function updateProductController(req, res) {
 
   const data = {
     ...req.body,
-    Precio: req.body.Precio ? Number(req.body.Precio) : undefined,
-    Stock: req.body.Stock ? Number(req.body.Stock) : undefined,
-    Descuento: req.body.Descuento
+    Precio: req.body.Precio !== undefined ? Number(req.body.Precio) : undefined,
+    Stock: req.body.Stock !== undefined ? Number(req.body.Stock) : undefined,
+    Descuento: req.body.Descuento !== undefined
       ? Number(req.body.Descuento)
       : undefined,
     Etiquetas: req.body.Etiquetas
@@ -67,6 +67,29 @@ export async function updateProductController(req, res) {
 
   const result = await updateProductService(id, data);
   res.send(result);
+}
+
+// PATCH STOCK — actualiza solo el stock (sin multer, acepta JSON)
+export async function updateStockController(req, res) {
+  try {
+    const { id } = req.params;
+    const { Stock } = req.body;
+
+    if (Stock === undefined || isNaN(Number(Stock))) {
+      return res.status(400).json({ error: "Stock inválido" });
+    }
+
+    const nuevoStock = Number(Stock);
+    if (nuevoStock < 0) {
+      return res.status(400).json({ error: "El stock no puede ser negativo" });
+    }
+
+    const result = await updateProductService(id, { Stock: nuevoStock });
+    res.json(result);
+  } catch (err) {
+    console.error("Error al actualizar stock:", err);
+    res.status(500).json({ error: "Error interno al actualizar el stock" });
+  }
 }
 
 // DELETE
