@@ -1,4 +1,4 @@
-import { registerUserService, loginService, userUpdateService, userDeleteService, userInfoService } from "../services/auth.service.js";
+import { registerUserService, loginService, userUpdateService, userUpdateWishlistService, userDeleteService, userInfoService } from "../services/auth.service.js";
 
 export async function registerController(req, res) {
   const { Nombre, Apellidos, Telefono, Email, Password, Direccion, Admin, Wishlist, Cartera, Birthdate } = req.body;
@@ -14,6 +14,12 @@ export async function loginController(req, res) {
 export async function updateController(req, res) {
   const { Email } = req.params;
   const mensaje = await userUpdateService(Email, req.body);
+  res.send(mensaje);
+}
+
+export async function updateWishlistController(req, res) {
+  const { Email } = req.params;
+  const mensaje = await userUpdateWishlistService(Email, req.body);
   res.send(mensaje);
 }
 
