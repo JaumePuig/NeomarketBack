@@ -23,6 +23,12 @@ export async function updateWishlistController(req, res) {
   res.send(mensaje);
 }
 
+export async function updateCarteraController(req, res) {
+  const { Email } = req.params;
+  const mensaje = await userUpdateCarteraService(Email, req.body);
+  res.send(mensaje);
+}
+
 export async function deleteController(req, res) {
   const { Email } = req.params;
   const mensaje = await userDeleteService({ Email});

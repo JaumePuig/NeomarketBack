@@ -83,6 +83,11 @@ export async function userUpdateWishlistService(userMail, userData) {
   return await usuario.findOneAndUpdate({ 'Email': userMail }, { $set: { 'Wishlist': userData.Wishlist } }, {returnDocument: 'after'});
 }
 
+export async function userUpdateCarteraService(userMail, userData) {
+  const usuario = await userModel();
+  return await usuario.findOneAndUpdate({ 'Email': userMail }, { $set: { 'Cartera': userData.Cartera } }, {returnDocument: 'after'});
+}
+
 export async function userDeleteService({ Email }) {
   const usuario = await userModel();
   return await usuario.findOneAndDelete({ 'Email': Email });
